@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Gestión de Inventario</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    
+    <style>
+        /* Estilos CSS3 personalizados */
+        :root {
+            --color-primario: #0d6efd;
+            --color-secundario: #6c757d;
+            --fondo-claro: #f8f9fa;
+            --texto-oscuro: #212529;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--texto-oscuro);
+            line-height: 1.6;
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        /* Sección Inicio */
+        .hero-section {
+            background: linear-gradient(135deg, #0d6efd 0%, #0dcaf0 100%);
+            color: white;
+            padding: 80px 0;
+            border-radius: 0 0 20px 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        /* Títulos de sección */
+        .section-title {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 30px;
+            font-weight: 700;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            width: 50%;
+            height: 4px;
+            background-color: var(--color-primario);
+            bottom: -10px;
+            left: 25%;
+            border-radius: 2px;
+        }
+
+        /* Tarjetas de servicios */
+        .card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: none;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .card-icon {
+            font-size: 2.5rem;
+            color: var(--color-primario);
+            margin-bottom: 15px;
+        }
+
+        /* Imagen Quiénes Somos */
+        .img-quienes-somos {
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+        }
+
+        /* Video container responsivo */
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+            margin: 20px 0;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 15px;
+        }
+
+        /* Botones personalizados */
+        .btn-custom {
+            background-color: var(--color-primario);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 50px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .btn-custom:hover {
+            background-color: #0b5ed7;
+            transform: scale(1.05);
+            color: white;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #212529;
+            color: #adb5bd;
+        }
+
+        footer a {
+            color: #0dcaf0;
+            text-decoration: none;
+        }
+
+        /* Media Query para pantallas pequeñas */
+        @media (max-width: 768px) {
+            .hero-section {
+                padding: 50px 0;
+            }
+            .section-title::after {
+                width: 70%;
+                left: 15%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header y Navegación -->
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+            <div class="container">
+                <a class="navbar-brand" href="#inicio">Gestión de Inventario</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="#inicio">Inicio</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#quienes-somos">Quiénes Somos</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#servicios">Servicios</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#registro">Registro</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#contacto">Contacto</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Sección Inicio -->
+        <section id="inicio" class="hero-section text-center">
+            <div class="container">
+                <h1 class="display-4 fw-bold mb-3">Sistema de Gestión de Inventario</h1>
+                <p class="lead mb-4">Una plataforma diseñada para facilitar el control y administración de productos dentro de empresas y negocios.</p>
+                <a href="#servicios" class="btn btn-custom btn-lg">Conoce nuestros servicios</a>
+            </div>
+        </section>
+
+        <!-- Sección Quiénes Somos -->
+        <section id="quienes-somos" class="py-5">
+            <div class="container">
+                <div class="text-center mb-5">
+                    <h2 class="section-title">Quiénes Somos</h2>
+                </div>
+                <div class="row align-items-center g-5">
+                    <div class="col-lg-6">
+                        <p>Somos una empresa ecuatoriana especializada en el desarrollo de soluciones tecnológicas para la gestión empresarial. Nacimos con la misión de ayudar a negocios, emprendedores y organizaciones a optimizar el control de sus productos e inventarios mediante herramientas digitales accesibles y eficientes.</p>
+                        <p>Nuestro equipo está comprometido con la innovación y la mejora continua. Trabajamos para ofrecer plataformas intuitivas que permitan a nuestros clientes reducir errores administrativos, ahorrar tiempo y tomar mejores decisiones basadas en datos actualizados en tiempo real.</p>
+                        <p>Creemos en la tecnología como un aliado estratégico para el crecimiento de las empresas. Por eso, diseñamos cada solución pensando en las necesidades reales del mercado, garantizando calidad, seguridad y un servicio de soporte cercano para cada uno de nuestros usuarios.</p>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="video-container">
+                            <!-- VIDEO DE YOUTUBE -->
+                            <iframe 
+                                src="https://www.youtube.com/embed/iM7gUJ75_8w?si=PQ-Z71KUVrdiH_Q_" 
+                                title="Video explicativo del Sistema de Gestión de Inventario"
+                                frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                        <img src="https://mecaluxes.cdnwm.com/img/blog/sistema-gestion-inventario-software.1.13.jpg?imwidth=1024&imdensity=1" alt="Sistema de Gestión de Inventario" class="img-fluid img-quienes-somos mt-3">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección Servicios -->
+        <section id="servicios" class="py-5 bg-light">
+            <div class="container">
+                <div class="text-center mb-5">
+                    <h2 class="section-title">Servicios y Funcionalidades</h2>
+                </div>
+                <div class="row g-4">
+                    <div class="col-md-4 col-sm-6">
+                        <div class="card h-100 text-center p-3">
+                            <div class="card-body">
+                                <i class="bi bi-box-seam card-icon"></i>
+                                <h5 class="card-title">Control de Stock</h5>
+                                <p class="card-text">Control de stock en tiempo real.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="card h-100 text-center p-3">
+                            <div class="card-body">
+                                <i class="bi bi-tags card-icon"></i>
+                                <h5 class="card-title">Registro de Productos</h5>
+                                <p class="card-text">Registro y administración de productos.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="card h-100 text-center p-3">
+                            <div class="card-body">
+                                <i class="bi bi-grid card-icon"></i>
+                                <h5 class="card-title">Organización</h5>
+                                <p class="card-text">Organización por categorías.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="card h-100 text-center p-3">
+                            <div class="card-body">
+                                <i class="bi bi-exclamation-triangle card-icon"></i>
+                                <h5 class="card-title">Alertas</h5>
+                                <p class="card-text">Alertas de inventario bajo.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="card h-100 text-center p-3">
+                            <div class="card-body">
+                                <i class="bi bi-bar-chart-line card-icon"></i>
+                                <h5 class="card-title">Reportes</h5>
+                                <p class="card-text">Generación de reportes.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="card h-100 text-center p-3">
+                            <div class="card-body">
+                                <i class="bi bi-truck card-icon"></i>
+                                <h5 class="card-title">Proveedores</h5>
+                                <p class="card-text">Gestión de proveedores.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6 mx-auto">
+                        <div class="card h-100 text-center p-3">
+                            <div class="card-body">
+                                <i class="bi bi-search card-icon"></i>
+                                <h5 class="card-title">Consulta Rápida</h5>
+                                <p class="card-text">Consulta rápida de existencias.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección Registro de Productos -->
+        <section id="registro" class="py-5">
+            <div class="container">
+                <div class="text-center mb-5">
+                    <h2 class="section-title">Registro de Productos</h2>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-md-8">
+                        <form id="formProducto" class="card p-4 shadow-sm" novalidate>
+                            <div class="mb-3">
+                                <label for="nombreProducto" class="form-label">Nombre del Producto</label>
+                                <input type="text" class="form-control" id="nombreProducto" placeholder="Ej. Laptop HP" required>
+                                <div class="invalid-feedback"></div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="descProducto" class="form-label">Descripción</label>
+                                <textarea class="form-control" id="descProducto" rows="2" placeholder="Descripción breve..." required></textarea>
+                                <div class="invalid-feedback"></div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="catProducto" class="form-label">Categoría</label>
+                                <select class="form-select" id="catProducto" required>
+                                    <option value="">Seleccione una categoría</option>
+                                    <option value="Electrónica">Electrónica</option>
+                                    <option value="Oficina">Oficina</option>
+                                    <option value="Hogar">Hogar</option>
+                                    <option value="Otros">Otros</option>
+                                </select>
+                                <div class="invalid-feedback"></div>
+                            </div>
+                            <button type="submit" class="btn btn-custom w-100">Registrar Producto</button>
+                        </form>
+                        <div id="mensajeValidacion" class="mt-3"></div>
+                    </div>
+                </div>
+
+                <div class="row mt-5">
+                    <div class="col-12">
+                        <h3 class="text-center">Productos Registrados (<span id="totalRegistros">0</span>)</h3>
+                        <div id="listaProductos" class="row mt-3">
+                            <!-- Los productos se mostrarán aquí -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección Contacto -->
+        <section id="contacto" class="py-5">
+            <div class="container">
+                <div class="text-center mb-5">
+                    <h2 class="section-title">Contacto</h2>
+                </div>
+                <div class="row g-5">
+                    <div class="col-lg-5">
+                        <h4 class="mb-4">Información de Contacto</h4>
+                        <ul class="list-unstyled">
+                            <li class="mb-3">
+                                <i class="bi bi-envelope-fill text-primary me-2"></i>
+                                <strong>Correo:</strong> <a href="mailto:vm.garofaloo@uea.edu.ec">vm.garofaloo@uea.edu.ec</a>
+                            </li>
+                            <li class="mb-3">
+                                <i class="bi bi-telephone-fill text-primary me-2"></i>
+                                <strong>Teléfono:</strong> +593 986010547
+                            </li>
+                            <li class="mb-3">
+                                <i class="bi bi-geo-alt-fill text-primary me-2"></i>
+                                <strong>Dirección:</strong> Ecuador
+                            </li>
+                        </ul>
+                        <h5 class="mt-4 mb-3">Síguenos en redes</h5>
+                        <a href="https://facebook.com" target="_blank" class="btn btn-outline-primary me-2 mb-2"><i class="bi bi-facebook"></i> Facebook</a>
+                        <a href="https://github.com" target="_blank" class="btn btn-outline-dark me-2 mb-2"><i class="bi bi-github"></i> GitHub</a>
+                    </div>
+                    <div class="col-lg-7">
+                        <h4 class="mb-4">Envíanos un mensaje</h4>
+                        <form>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label for="nombre" class="form-label">Nombre</label>
+                                    <input type="text" class="form-control" id="nombre" placeholder="Tu nombre" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="correo" class="form-label">Correo electrónico</label>
+                                    <input type="email" class="form-control" id="correo" placeholder="tucorreo@ejemplo.com" required>
+                                </div>
+                                <div class="col-12">
+                                    <label for="asunto" class="form-label">Asunto</label>
+                                    <input type="text" class="form-control" id="asunto" placeholder="Asunto del mensaje" required>
+                                </div>
+                                <div class="col-12">
+                                    <label for="mensaje" class="form-label">Mensaje</label>
+                                    <textarea class="form-control" id="mensaje" rows="4" placeholder="Escribe tu mensaje aquí..." required></textarea>
+                                </div>
+                                <div class="col-12 text-center">
+                                    <button type="submit" class="btn btn-custom btn-lg">Enviar mensaje</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Aside / Información Complementaria -->
+    <aside class="py-4 bg-light border-top">
+        <div class="container">
+            <h3 class="text-center mb-4">Información Complementaria</h3>
+            <div class="row text-center g-4">
+                <div class="col-md-4">
+                    <h5><i class="bi bi-clock-fill text-primary"></i> Horario de atención</h5>
+                    <p class="mb-0">Lunes a Viernes de 08:00 a 17:00</p>
+                </div>
+                <div class="col-md-4">
+                    <h5><i class="bi bi-gift-fill text-primary"></i> Promoción</h5>
+                    <p class="mb-0">Primer mes de uso gratuito para nuevos usuarios.</p>
+                </div>
+                <div class="col-md-4">
+                    <h5><i class="bi bi-headset text-primary"></i> Soporte técnico</h5>
+                    <p class="mb-0">Atención en línea para resolver consultas.</p>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Footer -->
+    <footer class="py-4 text-center">
+        <div class="container">
+            <p class="mb-1"><strong>Desarrollado por:</strong> Victor Marcial Garofalo Orozco</p>
+            <p class="mb-1"><strong>Asignatura:</strong> Desarrollo de Aplicaciones Web</p>
+            <p class="mb-0"><strong>Año:</strong> 2026</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- JavaScript externo -->
+    <script src="script.js"></script>
+</body>
+</html>
