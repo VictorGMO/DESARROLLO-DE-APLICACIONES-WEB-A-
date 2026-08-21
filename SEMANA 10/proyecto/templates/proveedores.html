@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}Proveedores - Gestión de Inventario{% endblock %}
+
+{% block content %}
+
+    <!-- seccion proveedores -->
+    <!-- los datos vienen desde app.py con render_template,por ahora son de ejemplo -->
+    <section id="proveedores" class="py-5">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-title">Módulo de Proveedores</h2>
+                <p class="text-muted">empresas que abastecen los productos del inventario (datos de ejemplo)</p>
+            </div>
+
+            <div class="row g-4">
+                <!-- aca se recorre la lista de proveedores que llega desde app.py -->
+                {% for proveedor in proveedores %}
+                <div class="col-md-4">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body">
+                            <i class="bi bi-truck card-icon"></i>
+                            <h5 class="card-title text-primary">{{ proveedor.nombre }}</h5>
+                            <span class="badge bg-secondary mb-2">{{ proveedor.producto }}</span>
+                            <p class="card-text">
+                                <i class="bi bi-telephone-fill text-primary me-1"></i>{{ proveedor.telefono }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

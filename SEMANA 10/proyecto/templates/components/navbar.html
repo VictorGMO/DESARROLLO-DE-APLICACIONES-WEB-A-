@@ -1,0 +1,20 @@
+<!-- components/navbar.html -->
+<!-- este es el menu de navegacion,se separo de base.html para que sea un componente reutilizable -->
+<!-- se incluye en base.html con la instruccion include de jinja2 -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+    <div class="container">
+        <a class="navbar-brand" href="{{ url_for('index') }}">Gestión de Inventario</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('index') }}">Inicio</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('productos') }}">Productos</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('clientes') }}">Clientes</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('proveedores') }}">Proveedores</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('facturacion') }}">Facturación</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
