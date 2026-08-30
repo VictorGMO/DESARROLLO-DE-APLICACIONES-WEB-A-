@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}Registrar Producto{% endblock %}
+
+{% block content %}
+
+    <!-- este formulario se valida en el servidor con flask-wtf,no con javascript -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-6">
+                    <div class="text-center mb-4">
+                        <h2 class="section-title">Registrar Producto</h2>
+                    </div>
+
+                    <form method="POST" novalidate class="card p-4 shadow-sm">
+                        <!-- token de proteccion csrf,obligatorio con flask-wtf -->
+                        {{ form.hidden_tag() }}
+
+                        <div class="mb-3">
+                            {{ form.nombre.label(class="form-label") }}
+                            {{ form.nombre(class="form-control" + (" is-invalid" if form.nombre.errors else "")) }}
+                            {% for error in form.nombre.errors %}
+                            <div class="invalid-feedback d-block">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form.descripcion.label(class="form-label") }}
+                            {{ form.descripcion(class="form-control" + (" is-invalid" if form.descripcion.errors else ""), rows="3") }}
+                            {% for error in form.descripcion.errors %}
+                            <div class="invalid-feedback d-block">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form.categoria.label(class="form-label") }}
+                            {{ form.categoria(class="form-select" + (" is-invalid" if form.categoria.errors else "")) }}
+                            {% for error in form.categoria.errors %}
+                            <div class="invalid-feedback d-block">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form.stock.label(class="form-label") }}
+                            {{ form.stock(class="form-control" + (" is-invalid" if form.stock.errors else "")) }}
+                            {% for error in form.stock.errors %}
+                            <div class="invalid-feedback d-block">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+
+                        {{ form.submit(class="btn btn-success w-100") }}
+                    </form>
+
+                    <div class="text-center mt-3">
+                        <a href="{{ url_for('productos') }}"><i class="bi bi-arrow-left"></i> volver al catálogo</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Proveedores - Gestión de Inventario{% endblock %}
+
+{% block content %}
+
+    <!-- seccion proveedores -->
+    <!-- los datos vienen desde app.py con render_template -->
+    <section id="proveedores" class="py-5">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-title">Módulo de Proveedores</h2>
+                <p class="text-muted">empresas que abastecen los productos del inventario</p>
+                <a href="{{ url_for('nuevo_proveedor') }}" class="btn btn-primary">
+                    <i class="bi bi-plus-circle"></i> Registrar proveedor
+                </a>
+            </div>
+
+            <div class="row g-4">
+                <!-- aca se recorre la lista de proveedores que llega desde app.py -->
+                {% for proveedor in proveedores %}
+                <div class="col-md-4">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body">
+                            <i class="bi bi-truck card-icon"></i>
+                            <h5 class="card-title text-primary">{{ proveedor.nombre }}</h5>
+                            <span class="badge bg-secondary mb-2">{{ proveedor.producto }}</span>
+                            <p class="card-text">
+                                <i class="bi bi-telephone-fill text-primary me-1"></i>{{ proveedor.telefono }}
+                            </p>
+                            <form action="{{ url_for('eliminar_proveedor', proveedor_id=proveedor.id) }}" method="POST" onsubmit="return confirm('¿Eliminar este proveedor?');">
+                                <button type="submit" class="btn btn-outline-danger btn-sm w-100">
+                                    <i class="bi bi-trash"></i> Eliminar
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
