@@ -1,0 +1,238 @@
+{% extends "base.html" %}
+
+{% block title %}Sistema de Gestión de Inventario - Inicio{% endblock %}
+
+{% block content %}
+
+    <!-- seccion inicio -->
+    <!-- nombre_sistema es la variable simple que se manda desde app.py,se usa con el filtro upper -->
+    <section id="inicio" class="hero-section text-center">
+        <div class="container">
+            <h1 class="display-4 fw-bold mb-3">{{ nombre_sistema|upper }}</h1>
+            <p class="lead mb-4">Tu tienda de confianza en electrodomésticos para el hogar, con un sistema propio para controlar el inventario, los clientes y las ventas.</p>
+            <a href="#servicios" class="btn btn-custom btn-lg">Conoce nuestros servicios</a>
+        </div>
+    </section>
+
+    <!-- seccion de estadisticas -->
+    <!-- estadisticas es el diccionario que viene de app.py,con info general del sistema -->
+    <section id="estadisticas" class="py-5">
+        <div class="container">
+            <div class="row text-center g-4">
+                <div class="col-md-4">
+                    <h2 class="display-6 text-primary fw-bold">{{ estadisticas.total_productos }}</h2>
+                    <p class="text-muted mb-0">Productos registrados</p>
+                </div>
+                <div class="col-md-4">
+                    <h2 class="display-6 text-primary fw-bold">{{ estadisticas.total_clientes }}</h2>
+                    <p class="text-muted mb-0">Clientes activos</p>
+                </div>
+                <div class="col-md-4">
+                    <h2 class="display-6 text-primary fw-bold">{{ estadisticas.total_proveedores }}</h2>
+                    <p class="text-muted mb-0">Proveedores aliados</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- seccion quienes somos -->
+    <section id="quienes-somos" class="py-5">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-title">Quiénes Somos</h2>
+            </div>
+            <div class="row align-items-center g-5">
+                <div class="col-lg-6">
+                    <p>ElectroCasa es una tienda ecuatoriana de electrodomésticos para el hogar: cocinas, refrigeradoras, televisores, lavadoras y más. Nacimos con la misión de ofrecer productos de calidad a precios accesibles, acompañados de un servicio cercano para cada cliente.</p>
+                    <p>El mercado de electrodomésticos en Ecuador es grande y competitivo, con cadenas reconocidas como La Ganga, Cresa Retail, Orve Hogar y Almacenes Japón liderando las ventas al por menor. Frente a ese panorama, en ElectroCasa apostamos por un control interno eficiente de nuestro inventario para poder competir con un servicio ágil y confiable.</p>
+                    <p>Por eso desarrollamos nuestro propio sistema de gestión: nos permite llevar un registro claro de productos, clientes, proveedores y facturación, para tomar mejores decisiones y no quedarnos sin stock de lo que más buscan nuestros clientes.</p>
+                </div>
+                <div class="col-lg-6">
+                    <div class="video-container">
+                        <!-- video de youtube relacionado con el sector de electrodomesticos -->
+                        <iframe
+                            width="560" height="315"
+                            src="https://www.youtube.com/embed/7SnHCRtSJmI?si=FK7FT6tG2UaLbn3v"
+                            title="Video relacionado con el sector de electrodomésticos"
+                            frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            referrerpolicy="strict-origin-when-cross-origin"
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                    <img src="{{ url_for('static', filename='img/tienda-electrocasa.png') }}" alt="Tienda ElectroCasa con electrodomésticos en exhibición" class="img-fluid img-quienes-somos mt-3">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- seccion servicios -->
+    <!-- cada tarjeta ahora es un link real,no solo decorativo -->
+    <!-- las de atencion al cliente llevan a la seccion de contacto,y el catalogo lleva al modulo real de productos -->
+    <section id="servicios" class="py-5 bg-light">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-title">Servicios y Funcionalidades</h2>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-4 col-sm-6">
+                    <a href="{{ url_for('productos') }}" class="text-decoration-none">
+                        <div class="card h-100 text-center p-3">
+                            <div class="card-body">
+                                <i class="bi bi-box-seam card-icon"></i>
+                                <h5 class="card-title">Catálogo de Productos</h5>
+                                <p class="card-text">Revisa el stock disponible de cada producto.</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <a href="#contacto" class="text-decoration-none">
+                        <div class="card h-100 text-center p-3">
+                            <div class="card-body">
+                                <i class="bi bi-truck card-icon"></i>
+                                <h5 class="card-title">Envío a Domicilio</h5>
+                                <p class="card-text">Consulta cobertura y costos de envío.</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <a href="#contacto" class="text-decoration-none">
+                        <div class="card h-100 text-center p-3">
+                            <div class="card-body">
+                                <i class="bi bi-shield-check card-icon"></i>
+                                <h5 class="card-title">Garantía</h5>
+                                <p class="card-text">Todos nuestros productos incluyen garantía.</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <a href="#contacto" class="text-decoration-none">
+                        <div class="card h-100 text-center p-3">
+                            <div class="card-body">
+                                <i class="bi bi-credit-card card-icon"></i>
+                                <h5 class="card-title">Crédito Directo</h5>
+                                <p class="card-text">Facilidades de pago,consulta requisitos.</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <a href="#contacto" class="text-decoration-none">
+                        <div class="card h-100 text-center p-3">
+                            <div class="card-body">
+                                <i class="bi bi-tools card-icon"></i>
+                                <h5 class="card-title">Servicio Técnico</h5>
+                                <p class="card-text">Soporte postventa para tus electrodomésticos.</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <a href="#contacto" class="text-decoration-none">
+                        <div class="card h-100 text-center p-3">
+                            <div class="card-body">
+                                <i class="bi bi-person-check card-icon"></i>
+                                <h5 class="card-title">Asesoría Personalizada</h5>
+                                <p class="card-text">Te ayudamos a elegir el producto ideal.</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-4 col-sm-6 mx-auto">
+                    <a href="#contacto" class="text-decoration-none">
+                        <div class="card h-100 text-center p-3">
+                            <div class="card-body">
+                                <i class="bi bi-house-gear card-icon"></i>
+                                <h5 class="card-title">Instalación Incluida</h5>
+                                <p class="card-text">Instalamos tu producto en tu domicilio.</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- seccion contacto -->
+    <section id="contacto" class="py-5">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-title">Contacto</h2>
+            </div>
+            <div class="row g-5">
+                <div class="col-lg-5">
+                    <h4 class="mb-4">Información de Contacto</h4>
+                    <ul class="list-unstyled">
+                        <li class="mb-3">
+                            <i class="bi bi-envelope-fill text-primary me-2"></i>
+                            <strong>Correo:</strong> <a href="mailto:vm.garofaloo@uea.edu.ec">vm.garofaloo@uea.edu.ec</a>
+                        </li>
+                        <li class="mb-3">
+                            <i class="bi bi-telephone-fill text-primary me-2"></i>
+                            <strong>Teléfono:</strong> +593 986010547
+                        </li>
+                        <li class="mb-3">
+                            <i class="bi bi-geo-alt-fill text-primary me-2"></i>
+                            <strong>Dirección:</strong> Ecuador
+                        </li>
+                    </ul>
+                    <h5 class="mt-4 mb-3">Síguenos en redes</h5>
+                    <a href="https://facebook.com" target="_blank" class="btn btn-outline-primary me-2 mb-2"><i class="bi bi-facebook"></i> Facebook</a>
+                    <a href="https://github.com" target="_blank" class="btn btn-outline-dark me-2 mb-2"><i class="bi bi-github"></i> GitHub</a>
+                </div>
+                <div class="col-lg-7">
+                    <h4 class="mb-4">Envíanos un mensaje</h4>
+                    <form>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label for="nombre" class="form-label">Nombre</label>
+                                <input type="text" class="form-control" id="nombre" placeholder="Tu nombre" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="correo" class="form-label">Correo electrónico</label>
+                                <input type="email" class="form-control" id="correo" placeholder="tucorreo@ejemplo.com" required>
+                            </div>
+                            <div class="col-12">
+                                <label for="asunto" class="form-label">Asunto</label>
+                                <input type="text" class="form-control" id="asunto" placeholder="Asunto del mensaje" required>
+                            </div>
+                            <div class="col-12">
+                                <label for="mensaje" class="form-label">Mensaje</label>
+                                <textarea class="form-control" id="mensaje" rows="4" placeholder="Escribe tu mensaje aquí..." required></textarea>
+                            </div>
+                            <div class="col-12 text-center">
+                                <button type="submit" class="btn btn-custom btn-lg">Enviar mensaje</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- esto seria el sidebar,se queda en el index porque es info general de la empresa,no de un modulo especifico -->
+    <aside class="py-4 bg-light border-top">
+        <div class="container">
+            <h3 class="text-center mb-4">Información Complementaria</h3>
+            <div class="row text-center g-4">
+                <div class="col-md-4">
+                    <h5><i class="bi bi-clock-fill text-primary"></i> Horario de atención</h5>
+                    <p class="mb-0">Lunes a Viernes de 08:00 a 17:00</p>
+                </div>
+                <div class="col-md-4">
+                    <h5><i class="bi bi-gift-fill text-primary"></i> Promoción</h5>
+                    <p class="mb-0">Primer mes de uso gratuito para nuevos usuarios.</p>
+                </div>
+                <div class="col-md-4">
+                    <h5><i class="bi bi-headset text-primary"></i> Soporte técnico</h5>
+                    <p class="mb-0">Atención en línea para resolver consultas.</p>
+                </div>
+            </div>
+        </div>
+    </aside>
+    <!-- termina el sidebar -->
+
+{% endblock %}
