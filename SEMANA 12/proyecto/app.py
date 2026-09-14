@@ -84,7 +84,7 @@ inicializar_base_datos()
 # DATOS EN MEMORIA (modulos que todavia no tienen persistencia)
 # estas listas viven mientras la app este corriendo,se reinician
 # si se reinicia el servidor. quedan preparadas para migrarse a sqlite
-# progresivamente en semanas siguientes,tal como pide la consigna
+# progresivamente mas adelante
 # ============================================
 
 clientes_data = [
@@ -131,7 +131,7 @@ def index():
 
 
 # ============================================
-# MODULO PRODUCTOS (con persistencia en sqlite desde la semana 12)
+# MODULO PRODUCTOS (con persistencia en sqlite)
 # ============================================
 
 @app.route('/productos')
