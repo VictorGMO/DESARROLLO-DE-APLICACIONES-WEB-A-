@@ -1,8 +1,8 @@
 # app.py
 # aca configuramos flask y las rutas del proyecto integrador de ElectroCasa
 # cada modulo (productos,clientes,proveedores,facturacion) tiene su propia ruta
-# desde la semana 11 se usan formularios con flask-wtf,validados en el servidor
-# desde la semana 12,el modulo de productos ya no usa una lista de python,
+# se usan formularios con flask-wtf,validados en el servidor
+# el modulo de productos ya no usa una lista de python,
 # usa una base de datos sqlite para que los datos no se pierdan al reiniciar la app
 
 import sqlite3
