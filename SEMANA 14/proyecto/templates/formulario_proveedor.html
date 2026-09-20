@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}Registrar Proveedor{% endblock %}
+
+{% block content %}
+
+    <section class="py-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-6">
+                    <div class="text-center mb-4">
+                        <h2 class="section-title">Registrar Proveedor</h2>
+                    </div>
+
+                    <form method="POST" novalidate class="card p-4 shadow-sm">
+                        {{ form.hidden_tag() }}
+
+                        <div class="mb-3">
+                            {{ form.nombre.label(class="form-label") }}
+                            {{ form.nombre(class="form-control" + (" is-invalid" if form.nombre.errors else "")) }}
+                            {% for error in form.nombre.errors %}
+                            <div class="invalid-feedback d-block">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form.producto.label(class="form-label") }}
+                            {{ form.producto(class="form-select" + (" is-invalid" if form.producto.errors else "")) }}
+                            {% for error in form.producto.errors %}
+                            <div class="invalid-feedback d-block">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form.telefono.label(class="form-label") }}
+                            {{ form.telefono(class="form-control" + (" is-invalid" if form.telefono.errors else "")) }}
+                            {% for error in form.telefono.errors %}
+                            <div class="invalid-feedback d-block">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+
+                        {{ form.submit(class="btn btn-success w-100") }}
+                    </form>
+
+                    <div class="text-center mt-3">
+                        <a href="{{ url_for('proveedores') }}"><i class="bi bi-arrow-left"></i> volver al listado</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

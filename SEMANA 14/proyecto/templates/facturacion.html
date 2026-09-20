@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}Facturación - ElectroCasa{% endblock %}
+
+{% block content %}
+
+    <section id="facturacion" class="py-5">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-title">Módulo de Facturación</h2>
+                <p class="text-muted">facturas generadas en el sistema</p>
+                <a href="{{ url_for('nueva_factura') }}" class="btn btn-primary">
+                    <i class="bi bi-plus-circle"></i> Registrar factura
+                </a>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-hover align-middle shadow-sm">
+                    <thead class="table-dark">
+                        <tr>
+                            <th># Factura</th>
+                            <th>Cliente</th>
+                            <th>Total</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for factura in facturas %}
+                        <tr>
+                            <td>{{ factura.id }}</td>
+                            <td>{{ factura.cliente }}</td>
+                            <td>${{ "%.2f"|format(factura.total) }}</td>
+                            <td>
+                                {% if factura.estado == 'Pagada' %}
+                                <span class="badge bg-success">{{ factura.estado }}</span>
+                                {% else %}
+                                <span class="badge bg-warning text-dark">{{ factura.estado }}</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <form action="{{ url_for('eliminar_factura', factura_id=factura.id) }}" method="POST" onsubmit="return confirm('¿Eliminar esta factura?');">
+                                    <button type="submit" class="btn btn-outline-danger btn-sm">
+                                        <i class="bi bi-trash"></i> Eliminar
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
