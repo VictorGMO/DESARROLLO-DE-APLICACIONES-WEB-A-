@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}Productos - ElectroCasa{% endblock %}
+
+{% block content %}
+
+    <!-- seccion catalogo,ahora los datos vienen de postgresql,con join hacia proveedores -->
+    <section id="catalogo" class="py-5 bg-light">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-title">Catálogo de Productos</h2>
+                <p class="text-muted">productos disponibles en el inventario</p>
+                <a href="{{ url_for('nuevo_producto') }}" class="btn btn-primary">
+                    <i class="bi bi-plus-circle"></i> Registrar producto
+                </a>
+            </div>
+            <div class="row g-4">
+                {% for producto in productos %}
+                <div class="col-md-4">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body">
+                            <span class="badge bg-secondary mb-2">{{ producto.categoria|upper }}</span>
+                            <h5 class="card-title text-primary">{{ producto.nombre }}</h5>
+                            <p class="card-text">{{ producto.descripcion }}</p>
+                            <p class="mb-1"><strong>Stock:</strong> {{ producto.stock }}</p>
+                            <p class="mb-2">
+                                <strong>Proveedor:</strong>
+                                {% if producto.proveedor_nombre %}
+                                    {{ producto.proveedor_nombre }}
+                                {% else %}
+                                    <span class="text-muted">sin asignar</span>
+                                {% endif %}
+                            </p>
+
+                            {% if producto.stock > 0 %}
+                            <span class="badge bg-success mb-2">Disponible</span>
+                            {% else %}
+                            <span class="badge bg-danger mb-2">Agotado</span>
+                            {% endif %}
+
+                            <div class="d-flex gap-2 mt-2">
+                                <a href="{{ url_for('editar_producto', producto_id=producto.id_producto) }}" class="btn btn-outline-primary btn-sm w-50">
+                                    <i class="bi bi-pencil"></i> Editar
+                                </a>
+                                <form action="{{ url_for('eliminar_producto', producto_id=producto.id_producto) }}" method="POST" class="w-50" onsubmit="return confirm('¿Eliminar este producto?');">
+                                    <button type="submit" class="btn btn-outline-danger btn-sm w-100">
+                                        <i class="bi bi-trash"></i> Eliminar
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
