@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block title %}Factura {{ factura.numero_factura }} - ElectroCasa{% endblock %}
+
+{% block content %}
+
+    <section class="py-5" id="zona-comprobante">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center mb-4 no-imprimir">
+                <a href="{{ url_for('facturacion') }}"><i class="bi bi-arrow-left"></i> volver al listado</a>
+                <button onclick="window.print()" class="btn btn-primary">
+                    <i class="bi bi-printer"></i> Imprimir / Guardar PDF
+                </button>
+            </div>
+
+            <div class="card p-4 shadow-sm" id="comprobante">
+                <div class="text-center mb-4">
+                    <h3 class="mb-0">ElectroCasa</h3>
+                    <p class="text-muted mb-0">Tienda de electrodomésticos - Ecuador</p>
+                    <h5 class="mt-3">Comprobante de Venta</h5>
+                    <p class="mb-0">N° {{ factura.numero_factura }}</p>
+                    <p class="text-muted">Fecha: {{ factura.fecha.strftime('%d/%m/%Y') }}</p>
+                </div>
+
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <h6>Datos del cliente</h6>
+                        <p class="mb-1">{{ factura.cliente_nombre }}</p>
+                        <p class="mb-1">Cédula/RUC: {{ factura.cedula }}</p>
+                        <p class="mb-1">{{ factura.correo }}</p>
+                        <p class="mb-1">{{ factura.telefono }}</p>
+                        <p class="mb-0">{{ factura.direccion }}</p>
+                    </div>
+                    <div class="col-md-6 text-md-end">
+                        <h6>Estado</h6>
+                        {% if factura.estado == 'Pagada' %}<span class="badge bg-success fs-6">{{ factura.estado }}</span>
+                        {% elif factura.estado == 'Pendiente' %}<span class="badge bg-warning text-dark fs-6">{{ factura.estado }}</span>
+                        {% else %}<span class="badge bg-secondary fs-6">{{ factura.estado }}</span>{% endif %}
+                    </div>
+                </div>
+
+                <table class="table table-bordered">
+                    <thead class="table-light">
+                        <tr><th>Producto</th><th>Cantidad</th><th>Precio Unitario</th><th>Subtotal</th></tr>
+                    </thead>
+                    <tbody>
+                        {% for linea in detalle %}
+                        <tr>
+                            <td>{{ linea.producto_nombre }}</td>
+                            <td>{{ linea.cantidad }}</td>
+                            <td>${{ "{:,.2f}".format(linea.precio_unitario) }}</td>
+                            <td>${{ "{:,.2f}".format(linea.subtotal) }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                <div class="text-end">
+                    <p class="mb-1">Subtotal: ${{ "{:,.2f}".format(factura.subtotal) }}</p>
+                    <p class="mb-1">IVA (15%): ${{ "{:,.2f}".format(factura.iva) }}</p>
+                    <p class="fs-5"><strong>Total: ${{ "{:,.2f}".format(factura.total) }}</strong></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- estilos solo para cuando se imprime,ocultan el navbar,footer y botones -->
+    <style>
+        @media print {
+            .no-imprimir, nav, footer { display: none !important; }
+            #comprobante { border: none !important; box-shadow: none !important; }
+        }
+    </style>
+
+{% endblock %}

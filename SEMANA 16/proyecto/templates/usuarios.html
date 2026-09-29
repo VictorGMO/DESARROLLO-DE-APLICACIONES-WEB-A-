@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block title %}Usuarios - ElectroCasa{% endblock %}
+
+{% block content %}
+
+    <section class="py-5">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-title">Usuarios del Sistema</h2>
+                <a href="{{ url_for('registro') }}" class="btn btn-primary">
+                    <i class="bi bi-person-plus"></i> Registrar usuario
+                </a>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-hover align-middle shadow-sm">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>#</th>
+                            <th>Nombre</th>
+                            <th>Usuario</th>
+                            <th>Rol</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for u in usuarios %}
+                        <tr>
+                            <td>{{ u.id }}</td>
+                            <td>{{ u.nombre }}</td>
+                            <td>{{ u.usuario }}</td>
+                            <td>
+                                {% if u.rol == 'administrador' %}
+                                <span class="badge bg-primary">Administrador</span>
+                                {% else %}
+                                <span class="badge bg-secondary">Vendedor</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if u.activo %}
+                                <span class="badge bg-success">Activo</span>
+                                {% else %}
+                                <span class="badge bg-danger">Desactivado</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if u.id != current_user.id %}
+                                <form action="{{ url_for('desactivar_usuario', usuario_id=u.id) }}" method="POST" onsubmit="return confirm('¿Cambiar el estado de este usuario?');">
+                                    <button type="submit" class="btn btn-outline-secondary btn-sm">
+                                        {% if u.activo %}Desactivar{% else %}Activar{% endif %}
+                                    </button>
+                                </form>
+                                {% else %}
+                                <span class="text-muted">(tú)</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

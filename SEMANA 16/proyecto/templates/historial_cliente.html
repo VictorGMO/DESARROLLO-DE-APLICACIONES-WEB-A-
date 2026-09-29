@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}Historial de {{ cliente.nombre }} - ElectroCasa{% endblock %}
+
+{% block content %}
+
+    <section class="py-5">
+        <div class="container">
+            <div class="text-center mb-4">
+                <h2 class="section-title">Historial de Facturas</h2>
+                <p class="text-muted">{{ cliente.nombre }} - {{ cliente.cedula }}</p>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-hover align-middle shadow-sm">
+                    <thead class="table-dark">
+                        <tr><th># Factura</th><th>Fecha</th><th>Total</th><th>Estado</th><th></th></tr>
+                    </thead>
+                    <tbody>
+                        {% for factura in facturas %}
+                        <tr>
+                            <td>{{ factura.numero_factura }}</td>
+                            <td>{{ factura.fecha.strftime('%d/%m/%Y') }}</td>
+                            <td>${{ "{:,.2f}".format(factura.total) }}</td>
+                            <td>
+                                {% if factura.estado == 'Pagada' %}<span class="badge bg-success">{{ factura.estado }}</span>
+                                {% elif factura.estado == 'Pendiente' %}<span class="badge bg-warning text-dark">{{ factura.estado }}</span>
+                                {% else %}<span class="badge bg-secondary">{{ factura.estado }}</span>{% endif %}
+                            </td>
+                            <td>
+                                <a href="{{ url_for('detalle_factura', factura_id=factura.id_factura) }}" class="btn btn-outline-primary btn-sm">Ver</a>
+                            </td>
+                        </tr>
+                        {% else %}
+                        <tr><td colspan="5" class="text-center text-muted">este cliente todavía no tiene facturas</td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="text-center mt-3">
+                <a href="{{ url_for('clientes') }}"><i class="bi bi-arrow-left"></i> volver al listado de clientes</a>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block title %}Registrar Usuario - ElectroCasa{% endblock %}
+
+{% block content %}
+
+    <!-- esta pagina solo la puede usar un administrador,es para crear otras cuentas del sistema -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-5">
+                    <div class="text-center mb-4">
+                        <h2 class="section-title">Registrar Usuario</h2>
+                        <p class="text-muted">crear una nueva cuenta del sistema</p>
+                    </div>
+
+                    <form method="POST" novalidate class="card p-4 shadow-sm">
+                        {{ form.hidden_tag() }}
+
+                        <div class="mb-3">
+                            {{ form.nombre.label(class="form-label") }}
+                            {{ form.nombre(class="form-control" + (" is-invalid" if form.nombre.errors else ""), placeholder="Ej: María Pérez") }}
+                            {% for error in form.nombre.errors %}
+                            <div class="invalid-feedback d-block">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form.usuario.label(class="form-label") }}
+                            {{ form.usuario(class="form-control" + (" is-invalid" if form.usuario.errors else ""), placeholder="Ej: maria.perez") }}
+                            {% for error in form.usuario.errors %}
+                            <div class="invalid-feedback d-block">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form.rol.label(class="form-label") }}
+                            {{ form.rol(class="form-select" + (" is-invalid" if form.rol.errors else "")) }}
+                            {% for error in form.rol.errors %}
+                            <div class="invalid-feedback d-block">{{ error }}</div>
+                            {% endfor %}
+                            <div class="form-text">el vendedor solo puede facturar y consultar</div>
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form.password.label(class="form-label") }}
+                            {{ form.password(class="form-control" + (" is-invalid" if form.password.errors else "")) }}
+                            {% for error in form.password.errors %}
+                            <div class="invalid-feedback d-block">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form.confirmar_password.label(class="form-label") }}
+                            {{ form.confirmar_password(class="form-control" + (" is-invalid" if form.confirmar_password.errors else "")) }}
+                            {% for error in form.confirmar_password.errors %}
+                            <div class="invalid-feedback d-block">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+
+                        {{ form.submit(class="btn btn-success w-100") }}
+                    </form>
+
+                    <div class="text-center mt-3">
+                        <a href="{{ url_for('usuarios') }}"><i class="bi bi-arrow-left"></i> volver al listado de usuarios</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

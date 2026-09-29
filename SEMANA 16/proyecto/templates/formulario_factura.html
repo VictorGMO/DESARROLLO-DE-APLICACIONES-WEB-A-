@@ -1,0 +1,153 @@
+{% extends "base.html" %}
+
+{% block title %}Nueva Factura - ElectroCasa{% endblock %}
+
+{% block content %}
+
+    <section class="py-5">
+        <div class="container">
+            <div class="text-center mb-4">
+                <h2 class="section-title">Nueva Factura</h2>
+            </div>
+
+            <form method="POST" id="formFactura" class="card p-4 shadow-sm">
+                {{ csrf_form.hidden_tag() }}
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Cliente</label>
+                        <select name="id_cliente" class="form-select" required>
+                            <option value="">Seleccione un cliente</option>
+                            {% for c in clientes %}
+                            <option value="{{ c.id_cliente }}">{{ c.nombre }} - {{ c.cedula }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Estado</label>
+                        <select name="estado" class="form-select" required>
+                            <option value="Pendiente">Pendiente</option>
+                            <option value="Pagada">Pagada</option>
+                        </select>
+                    </div>
+                </div>
+
+                <hr>
+                <h5>Detalle de productos</h5>
+
+                <table class="table" id="tablaDetalle">
+                    <thead>
+                        <tr>
+                            <th>Producto</th>
+                            <th style="width: 110px;">Cantidad</th>
+                            <th style="width: 120px;">Precio</th>
+                            <th style="width: 120px;">Subtotal</th>
+                            <th style="width: 50px;"></th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+
+                <button type="button" class="btn btn-outline-primary btn-sm mb-3" id="btnAgregarLinea">
+                    <i class="bi bi-plus-circle"></i> Agregar producto
+                </button>
+
+                <div class="text-end">
+                    <p class="mb-1">Subtotal: <strong id="txtSubtotal">$0.00</strong></p>
+                    <p class="mb-1">IVA ({{ (iva_porcentaje * 100)|int }}%): <strong id="txtIva">$0.00</strong></p>
+                    <p class="mb-0 fs-5">Total: <strong id="txtTotal">$0.00</strong></p>
+                </div>
+
+                <button type="submit" class="btn btn-success w-100 mt-3">Guardar Factura</button>
+            </form>
+
+            <div class="text-center mt-3">
+                <a href="{{ url_for('facturacion') }}"><i class="bi bi-arrow-left"></i> volver al listado</a>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+// lista de productos disponibles,con su precio y stock,para armar el detalle
+// se genera aca porque viene de la base de datos (no se puede escribir a mano en el html)
+const PRODUCTOS = [
+    {% for p in productos %}
+    { id: {{ p.id_producto }}, nombre: {{ p.nombre|tojson }}, precio: {{ p.precio }}, stock: {{ p.stock }} },
+    {% endfor %}
+];
+
+const IVA_PORCENTAJE = {{ iva_porcentaje }};
+const cuerpoTabla = document.querySelector('#tablaDetalle tbody');
+
+function crearFilaProducto() {
+    const fila = document.createElement('tr');
+
+    const opciones = PRODUCTOS.map(p => `<option value="${p.id}" data-precio="${p.precio}" data-stock="${p.stock}">${p.nombre} (stock: ${p.stock})</option>`).join('');
+
+    fila.innerHTML = `
+        <td>
+            <select name="producto_id" class="form-select select-producto" required>
+                <option value="">Seleccione un producto</option>
+                ${opciones}
+            </select>
+        </td>
+        <td><input type="number" name="cantidad" class="form-control input-cantidad" min="1" value="1" required></td>
+        <td class="precio-unitario">$0.00</td>
+        <td class="subtotal-linea">$0.00</td>
+        <td><button type="button" class="btn btn-outline-danger btn-sm btn-quitar-linea"><i class="bi bi-x"></i></button></td>
+    `;
+
+    cuerpoTabla.appendChild(fila);
+
+    fila.querySelector('.select-producto').addEventListener('change', () => recalcularFila(fila));
+    fila.querySelector('.input-cantidad').addEventListener('input', () => recalcularFila(fila));
+    fila.querySelector('.btn-quitar-linea').addEventListener('click', () => {
+        fila.remove();
+        recalcularTotales();
+    });
+}
+
+function recalcularFila(fila) {
+    const select = fila.querySelector('.select-producto');
+    const opcionSeleccionada = select.options[select.selectedIndex];
+    const precio = opcionSeleccionada ? parseFloat(opcionSeleccionada.dataset.precio || 0) : 0;
+    const stockDisponible = opcionSeleccionada ? parseInt(opcionSeleccionada.dataset.stock || 0) : 0;
+    const inputCantidad = fila.querySelector('.input-cantidad');
+    let cantidad = parseInt(inputCantidad.value || 0);
+
+    // aviso visual si se pide mas cantidad de la que hay en stock,antes de que el servidor lo rechace
+    if (cantidad > stockDisponible) {
+        inputCantidad.classList.add('is-invalid');
+    } else {
+        inputCantidad.classList.remove('is-invalid');
+    }
+
+    const subtotalLinea = precio * cantidad;
+    fila.querySelector('.precio-unitario').textContent = '$' + precio.toFixed(2);
+    fila.querySelector('.subtotal-linea').textContent = '$' + subtotalLinea.toFixed(2);
+
+    recalcularTotales();
+}
+
+function recalcularTotales() {
+    let subtotal = 0;
+    document.querySelectorAll('.subtotal-linea').forEach(celda => {
+        subtotal += parseFloat(celda.textContent.replace('$', '')) || 0;
+    });
+    const iva = subtotal * IVA_PORCENTAJE;
+    const total = subtotal + iva;
+
+    document.getElementById('txtSubtotal').textContent = '$' + subtotal.toFixed(2);
+    document.getElementById('txtIva').textContent = '$' + iva.toFixed(2);
+    document.getElementById('txtTotal').textContent = '$' + total.toFixed(2);
+}
+
+document.getElementById('btnAgregarLinea').addEventListener('click', crearFilaProducto);
+
+// arranca con una fila lista para no dejar la tabla vacia
+crearFilaProducto();
+</script>
+{% endblock %}

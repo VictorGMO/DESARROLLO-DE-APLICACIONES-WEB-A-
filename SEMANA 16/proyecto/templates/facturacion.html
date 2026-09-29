@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block title %}Facturación - ElectroCasa{% endblock %}
+
+{% block content %}
+
+    <section id="facturacion" class="py-5">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-title">Módulo de Facturación</h2>
+                <a href="{{ url_for('nueva_factura') }}" class="btn btn-primary">
+                    <i class="bi bi-plus-circle"></i> Nueva factura
+                </a>
+            </div>
+
+            <form method="GET" class="row g-2 justify-content-center mb-4">
+                <div class="col-md-3">
+                    <select name="estado" class="form-select" onchange="this.form.submit()">
+                        <option value="">Todos los estados</option>
+                        <option value="Pagada" {% if estado_filtro == 'Pagada' %}selected{% endif %}>Pagada</option>
+                        <option value="Pendiente" {% if estado_filtro == 'Pendiente' %}selected{% endif %}>Pendiente</option>
+                        <option value="Anulada" {% if estado_filtro == 'Anulada' %}selected{% endif %}>Anulada</option>
+                    </select>
+                </div>
+            </form>
+
+            <div class="table-responsive">
+                <table class="table table-hover align-middle shadow-sm">
+                    <thead class="table-dark">
+                        <tr>
+                            <th># Factura</th><th>Cliente</th><th>Fecha</th><th>Subtotal</th><th>IVA</th><th>Total</th><th>Estado</th><th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for factura in facturas %}
+                        <tr>
+                            <td>{{ factura.numero_factura }}</td>
+                            <td>{{ factura.cliente_nombre }}</td>
+                            <td>{{ factura.fecha.strftime('%d/%m/%Y') }}</td>
+                            <td>${{ "{:,.2f}".format(factura.subtotal) }}</td>
+                            <td>${{ "{:,.2f}".format(factura.iva) }}</td>
+                            <td>${{ "{:,.2f}".format(factura.total) }}</td>
+                            <td>
+                                {% if factura.estado == 'Pagada' %}<span class="badge bg-success">{{ factura.estado }}</span>
+                                {% elif factura.estado == 'Pendiente' %}<span class="badge bg-warning text-dark">{{ factura.estado }}</span>
+                                {% else %}<span class="badge bg-secondary">{{ factura.estado }}</span>{% endif %}
+                            </td>
+                            <td>
+                                <div class="d-flex gap-1 flex-wrap">
+                                    <a href="{{ url_for('detalle_factura', factura_id=factura.id_factura) }}" class="btn btn-outline-secondary btn-sm">Ver</a>
+                                    {% if factura.estado == 'Pendiente' %}
+                                    <form action="{{ url_for('marcar_pagada', factura_id=factura.id_factura) }}" method="POST" onsubmit="return confirm('¿Marcar esta factura como Pagada?');">
+                                        <button type="submit" class="btn btn-outline-success btn-sm">Marcar Pagada</button>
+                                    </form>
+                                    {% endif %}
+                                    {% if factura.estado != 'Anulada' and current_user.es_administrador %}
+                                    <form action="{{ url_for('anular_factura', factura_id=factura.id_factura) }}" method="POST" onsubmit="return confirm('¿Anular esta factura? El stock vendido se devolverá al inventario.');">
+                                        <button type="submit" class="btn btn-outline-danger btn-sm">Anular</button>
+                                    </form>
+                                    {% endif %}
+                                </div>
+                            </td>
+                        </tr>
+                        {% else %}
+                        <tr><td colspan="8" class="text-center text-muted">no hay facturas registradas</td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
