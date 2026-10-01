@@ -450,7 +450,6 @@ def clientes():
 
 @app.route('/clientes/nuevo', methods=['GET', 'POST'])
 @login_required
-@admin_required
 def nuevo_cliente():
     form = ClienteForm()
 
@@ -477,7 +476,6 @@ def nuevo_cliente():
 
 @app.route('/clientes/editar/<int:cliente_id>', methods=['GET', 'POST'])
 @login_required
-@admin_required
 def editar_cliente(cliente_id):
     form = ClienteForm()
 
