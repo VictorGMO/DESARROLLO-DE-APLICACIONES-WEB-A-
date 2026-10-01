@@ -8,7 +8,7 @@
         <div class="container">
             <div class="text-center mb-5">
                 <h2 class="section-title">Módulo de Clientes</h2>
-                {% if current_user.es_administrador %}
+              {% if current_user.is_authenticated %}
                 <a href="{{ url_for('nuevo_cliente') }}" class="btn btn-primary">
                     <i class="bi bi-plus-circle"></i> Registrar cliente
                 </a>
@@ -44,10 +44,12 @@
                                     <a href="{{ url_for('historial_cliente', cliente_id=cliente.id_cliente) }}" class="btn btn-outline-secondary btn-sm">
                                         <i class="bi bi-clock-history"></i> Historial
                                     </a>
-                                    {% if current_user.es_administrador %}
+                                                                       {% if current_user.is_authenticated %}
                                     <a href="{{ url_for('editar_cliente', cliente_id=cliente.id_cliente) }}" class="btn btn-outline-primary btn-sm">
                                         <i class="bi bi-pencil"></i> Editar
                                     </a>
+                                    {% endif %}
+                                    {% if current_user.es_administrador %}
                                     <form action="{{ url_for('eliminar_cliente', cliente_id=cliente.id_cliente) }}" method="POST" onsubmit="return confirm('¿Eliminar a {{ cliente.nombre }}? Solo es posible si no tiene facturas registradas.');">
                                         <button type="submit" class="btn btn-outline-danger btn-sm">
                                             <i class="bi bi-trash"></i> Eliminar
