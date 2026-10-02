@@ -4,12 +4,15 @@
 
 {% block content %}
 
-    <!-- seccion inicio -->
-    <section id="inicio" class="hero-section text-center">
+     <!-- seccion inicio -->
+    <section id="inicio" class="hero-section">
         <div class="container">
-            <h1 class="display-4 fw-bold mb-3">{{ nombre_sistema|upper }}</h1>
-            <p class="lead mb-4">Tu tienda de confianza en electrodomésticos para el hogar, con un sistema propio para controlar el inventario, los clientes y las ventas.</p>
-            <a href="#servicios" class="btn btn-custom btn-lg">Conoce nuestros servicios</a>
+            <div class="hero-contenido">
+                <h1 class="display-3 fw-bold mb-1">{{ nombre_sistema|upper }}</h1>
+                <h2 class="hero-subtitulo mb-3">Tu tienda de electrodomésticos</h2>
+                <p class="mb-4">Tu tienda de confianza en electrodomésticos para el hogar, con un sistema propio para controlar el inventario, los clientes y las ventas.</p>
+                <a href="#quienes-somos" class="btn btn-custom btn-lg rounded-pill px-4">Leer más</a>
+            </div>
         </div>
     </section>
 
